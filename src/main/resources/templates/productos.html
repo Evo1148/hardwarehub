@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Productos</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">HardwareHub</a>
+        <div class="navbar-nav">
+            <a class="nav-link active" th:href="@{/tienda}">Tienda</a>
+            <a class="nav-link" th:href="@{/carrito}">Carrito</a>
+            <a class="nav-link" th:href="@{/productos}">Admin Productos</a>
+            <a class="nav-link" th:href="@{/categorias}">Admin Categorías</a>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3">Productos</h1>
+        <a class="btn btn-primary" th:href="@{/productos/nuevo}">Nuevo Producto</a>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Imagen</th>
+            <th class="text-end">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="producto : ${productos}">
+            <td th:text="${producto.id}"></td>
+            <td th:text="${producto.nombre}"></td>
+            <td th:text="${producto.categoria.nombre}"></td>
+            <td th:text="${producto.precio}"></td>
+            <td th:text="${producto.stock}"></td>
+
+            <td>
+                <img th:if="${producto.imagen != null}"
+                     th:src="${producto.imagen}"
+                     style="width: 60px; height: auto;"
+                     class="img-thumbnail"/>
+
+                <span th:if="${producto.imagen == null}" class="text-muted">Sin imagen</span>
+            </td>
+
+            <td class="text-end">
+                <a class="btn btn-sm btn-secondary"
+                   th:href="@{'/productos/editar/' + ${producto.id}}">Editar</a>
+                <a class="btn btn-sm btn-danger ms-2"
+                   th:href="@{'/productos/eliminar/' + ${producto.id}}"
+                   onclick="return confirm('¿Seguro que deseas eliminar este producto?');">
+                    Eliminar
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${#lists.isEmpty(productos)}" class="alert alert-info">
+        No hay productos todavía. Crea el primero.
+    </div>
+
+</div>
+
+</body>
+</html>

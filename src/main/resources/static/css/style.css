@@ -1,0 +1,130 @@
+/* ============================
+   Tema Dino para HardwareHub 🦖
+   ============================ */
+
+body {
+    background-image: url('../images/fondo.png');
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+/* NAVBAR */
+
+.navbar-dino {
+    background: linear-gradient(90deg, #0f172a 0%, #111827 40%, #064e3b 100%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.navbar-brand .dino-icon {
+    margin-right: 6px;
+}
+
+/* CONTENEDOR PRINCIPAL */
+
+.main-container {
+    padding-bottom: 3rem;
+}
+
+/* TITULOS */
+
+.page-title {
+    font-weight: 700;
+    color: #e5e7eb;
+}
+
+.subtitle {
+    color: #9ca3af;
+    font-size: 0.95rem;
+}
+
+/* TARJETAS DE PRODUCTO EN TIENDA */
+
+.card-dino {
+    background: #020617;
+    border-radius: 14px;
+    border: 1px solid #1f2937;
+    color: #e5e7eb;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.card-dino:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+    border-color: #10b981;
+}
+
+.card-dino .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* BADGE CATEGORÍA */
+
+.badge-category {
+    background-color: #064e3b;
+    color: #a7f3d0;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* BOTONES ESPECIALES */
+
+.btn-dino-primary {
+    background-color: #10b981;
+    border-color: #059669;
+    color: #022c22;
+    font-weight: 600;
+}
+
+.btn-dino-primary:hover {
+    background-color: #059669;
+    border-color: #047857;
+    color: #ecfdf5;
+}
+
+.btn-dino-outline {
+    border-color: #10b981;
+    color: #a7f3d0;
+}
+
+.btn-dino-outline:hover {
+    background-color: #10b981;
+    color: #022c22;
+}
+
+/* TABLAS (ADMIN) */
+
+.table-dark {
+    background-color: #020617 !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #030712;
+}
+
+/* ENLACES GENERALES */
+
+a {
+    color: #6ee7b7;
+}
+
+a:hover {
+    color: #a7f3d0;
+}
+
+/* TOTAL DEL CARRITO */
+
+.total-dino {
+    color: #fbbf24;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
