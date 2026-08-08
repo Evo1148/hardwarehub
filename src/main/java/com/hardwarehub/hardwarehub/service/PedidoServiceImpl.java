@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,11 +42,16 @@ public class PedidoServiceImpl implements PedidoService {
         Pedido pedido = new Pedido(comprador);
         BigDecimal total = BigDecimal.ZERO;
 
-        for (CarritoItem item : carrito.values()) {
+        // Correccion posterior asistida por IA: un orden estable reduce el riesgo de deadlocks.
+        List<CarritoItem> itemsOrdenados = carrito.values().stream()
+                .sorted(Comparator.comparing(item -> item.getProducto().getId()))
+                .toList();
+
+        for (CarritoItem item : itemsOrdenados) {
             Long productoId = item.getProducto().getId();
             int cantidad = item.getCantidad();
 
-            Producto producto = productoRepository.findById(productoId)
+            Producto producto = productoRepository.findByIdForUpdate(productoId)
                     .orElseThrow(() -> new IllegalArgumentException("El producto ya no existe."));
 
             if (producto.getVendedor() == null) {
