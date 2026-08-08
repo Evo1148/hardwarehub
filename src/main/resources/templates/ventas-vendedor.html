@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout(~{::contenido})">
+
+<div th:fragment="contenido">
+
+    <h1 class="h3 mb-3" th:text="${vistaAdmin ? 'Todas las ventas del marketplace' : 'Ventas de mis productos'}">Ventas</h1>
+
+    <div th:if="${#lists.isEmpty(ventas)}" class="alert alert-info">
+        Todavía no hay ventas registradas.
+    </div>
+
+    <table class="table table-striped table-hover" th:if="${!#lists.isEmpty(ventas)}">
+        <thead class="table-dark">
+        <tr>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Comprador</th>
+            <th>Email comprador</th>
+            <th th:if="${vistaAdmin}">Vendedor</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="v : ${ventas}">
+            <td th:text="${#temporals.format(v.pedido.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${v.nombreProducto}"></td>
+            <td th:text="${v.pedido.comprador.nombre}"></td>
+            <td th:text="${v.pedido.comprador.email}"></td>
+            <td th:if="${vistaAdmin}" th:text="${v.vendedor.nombre}"></td>
+            <td th:text="${v.cantidad}"></td>
+            <td><span th:text="${v.subtotal}"></span> €</td>
+            <td>
+                <a class="btn btn-sm btn-outline-primary" th:href="@{'/pedidos/' + ${v.pedido.id}}">Pedido</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</html>

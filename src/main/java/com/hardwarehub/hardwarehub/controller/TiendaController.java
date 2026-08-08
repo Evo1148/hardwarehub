@@ -1,5 +1,6 @@
 package com.hardwarehub.hardwarehub.controller;
 
+import com.hardwarehub.hardwarehub.model.Producto;
 import com.hardwarehub.hardwarehub.service.CategoriaService;
 import com.hardwarehub.hardwarehub.service.ProductoService;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,7 @@ public class TiendaController {
 
     @GetMapping("/producto/{id}")
     public String detalleProducto(@PathVariable Long id, Model model) {
-        var producto = productoService.findById(id)
+        Producto producto = productoService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID no válido: " + id));
 
         model.addAttribute("producto", producto);

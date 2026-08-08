@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout(~{::contenido})">
+
+<div th:fragment="contenido">
+
+    <h1 class="h3 mb-3">Mis compras</h1>
+
+    <div th:if="${#lists.isEmpty(pedidos)}" class="alert alert-info">
+        Todavía no has realizado ninguna compra.
+    </div>
+
+    <table class="table table-striped" th:if="${!#lists.isEmpty(pedidos)}">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Total</th>
+            <th class="text-end">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${pedidos}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${#temporals.format(p.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+            <td><span th:text="${p.total}"></span> €</td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-primary" th:href="@{'/pedidos/' + ${p.id}}">Ver detalle</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</html>

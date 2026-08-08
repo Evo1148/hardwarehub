@@ -9,6 +9,8 @@ public interface ProductoService {
 
     List<Producto> findAll();
 
+    List<Producto> findByVendedorId(Long vendedorId);
+
     Optional<Producto> findById(Long id);
 
     Producto save(Producto producto);

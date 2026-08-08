@@ -14,4 +14,6 @@ public interface CategoriaService {
     Categoria save(Categoria categoria);
 
     void deleteById(Long id);
+
+    boolean isCategoriaEnUso(Long categoriaId);
 }

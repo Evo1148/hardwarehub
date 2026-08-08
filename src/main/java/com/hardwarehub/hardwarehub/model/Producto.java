@@ -33,17 +33,23 @@ public class Producto {
     @NotNull(message = "La categoría es obligatoria")
     private Categoria categoria;
 
+    // Usuario que ha publicado el producto en el marketplace
+    @ManyToOne
+    @JoinColumn(name = "vendedor_id")
+    private Usuario vendedor;
+
     // Imagen representada como URL o nombre de archivo
     private String imagen;
 
     public Producto() {}
 
-    public Producto(String nombre, String descripcion, BigDecimal precio, Integer stock, Categoria categoria, String imagen) {
+    public Producto(String nombre, String descripcion, BigDecimal precio, Integer stock, Categoria categoria, Usuario vendedor, String imagen) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.stock = stock;
         this.categoria = categoria;
+        this.vendedor = vendedor;
         this.imagen = imagen;
     }
 
@@ -74,6 +80,14 @@ public class Producto {
     public Categoria getCategoria() { return categoria; }
 
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
+
+    public Usuario getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Usuario vendedor) {
+        this.vendedor = vendedor;
+    }
 
     public String getImagen() { return imagen; }
 

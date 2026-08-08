@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/categorias")
@@ -20,8 +21,9 @@ public class CategoriaController {
 
     // Listado de categorías
     @GetMapping
-    public String listarCategorias(Model model) {
+    public String listarCategorias(Model model, @ModelAttribute("mensaje") String mensaje) {
         model.addAttribute("categorias", categoriaService.findAll());
+        model.addAttribute("mensaje", mensaje);
         return "categorias"; // nombre de la plantilla Thymeleaf
     }
 
@@ -53,9 +55,15 @@ public class CategoriaController {
     }
 
     // Eliminar
-    @GetMapping("/eliminar/{id}")
-    public String eliminarCategoria(@PathVariable Long id) {
+    @PostMapping("/eliminar/{id}")
+    public String eliminarCategoria(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        if (categoriaService.isCategoriaEnUso(id)) {
+            redirectAttributes.addFlashAttribute("mensaje", "No se puede eliminar: la categoría tiene productos asociados.");
+            return "redirect:/categorias";
+        }
+
         categoriaService.deleteById(id);
+        redirectAttributes.addFlashAttribute("mensaje", "Categoría eliminada correctamente.");
         return "redirect:/categorias";
     }
 }

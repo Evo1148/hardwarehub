@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout(~{::contenido})">
+
+<div th:fragment="contenido">
+
+    <div th:if="${mensaje != null}" class="alert alert-success" th:text="${mensaje}"></div>
+
+    <h1 class="h3 mb-3">Detalle del pedido #<span th:text="${pedido.id}"></span></h1>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <p class="mb-1"><strong>Comprador:</strong> <span th:text="${pedido.comprador.nombre}"></span></p>
+            <p class="mb-1"><strong>Email comprador:</strong> <span th:text="${pedido.comprador.email}"></span></p>
+            <p class="mb-1"><strong>Fecha:</strong> <span th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}"></span></p>
+            <p class="mb-0"><strong>Total:</strong> <span th:text="${pedido.total}"></span> €</p>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Producto</th>
+            <th>Vendedor</th>
+            <th>Precio unitario</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="l : ${pedido.lineas}">
+            <td th:text="${l.nombreProducto}"></td>
+            <td th:text="${l.vendedor.nombre}"></td>
+            <td><span th:text="${l.precioUnitario}"></span> €</td>
+            <td th:text="${l.cantidad}"></td>
+            <td><span th:text="${l.subtotal}"></span> €</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" th:href="@{/pedidos}">Volver a mis compras</a>
+
+</div>
+
+</html>

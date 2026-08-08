@@ -29,6 +29,11 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
+    public List<Producto> findByVendedorId(Long vendedorId) {
+        return productoRepository.findByVendedorId(vendedorId);
+    }
+
+    @Override
     public Producto save(Producto producto) {
         return productoRepository.save(producto);
     }
