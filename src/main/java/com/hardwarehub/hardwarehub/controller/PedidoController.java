@@ -1,5 +1,6 @@
 package com.hardwarehub.hardwarehub.controller;
 
+import com.hardwarehub.hardwarehub.model.LineaPedido;
 import com.hardwarehub.hardwarehub.model.Pedido;
 import com.hardwarehub.hardwarehub.model.Rol;
 import com.hardwarehub.hardwarehub.model.Usuario;
@@ -10,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/pedidos")
@@ -42,14 +46,27 @@ public class PedidoController {
 
         boolean esComprador = pedido.getComprador().getId().equals(usuario.getId());
         boolean esAdmin = Rol.ADMIN.equals(usuario.getRol());
-        boolean esVendedorDelPedido = pedido.getLineas().stream()
-                .anyMatch(linea -> linea.getVendedor().getId().equals(usuario.getId()));
+        List<LineaPedido> lineasVendedor = pedido.getLineas().stream()
+                .filter(linea -> linea.getVendedor().getId().equals(usuario.getId()))
+                .toList();
 
-        if (!esComprador && !esAdmin && !esVendedorDelPedido) {
+        if (!esComprador && !esAdmin && lineasVendedor.isEmpty()) {
             return "redirect:/tienda";
         }
 
+        // Correccion posterior asistida por IA: un vendedor solo recibe sus propias lineas.
+        boolean vistaVendedor = !esComprador && !esAdmin;
+        List<LineaPedido> lineasVisibles = vistaVendedor ? lineasVendedor : pedido.getLineas();
+        BigDecimal totalVisible = vistaVendedor
+                ? lineasVendedor.stream()
+                        .map(LineaPedido::getSubtotal)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add)
+                : pedido.getTotal();
+
         model.addAttribute("pedido", pedido);
+        model.addAttribute("lineasVisibles", lineasVisibles);
+        model.addAttribute("totalVisible", totalVisible);
+        model.addAttribute("vistaVendedor", vistaVendedor);
         return "pedido-detalle";
     }
 }

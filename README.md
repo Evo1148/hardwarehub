@@ -1,5 +1,8 @@
 # HardwareHub Marketplace
 
+> [!NOTE]
+> El proyecto incluye una [corrección posterior asistida por IA](AI_CORRECTION_NOTICE.md), preparada por OpenAI Codex el 8 de agosto de 2026. El aviso identifica su alcance y la separa de la autoría del proyecto original.
+
 Proyecto web hecho con Spring Boot, Thymeleaf, Spring Data JPA, Spring Security y MySQL.
 
 La aplicación empezó como una tienda sencilla de componentes de ordenador y en esta versión la he cambiado para que funcione más como un marketplace. La idea es que no exista solo un administrador metiendo productos, sino que también haya usuarios vendedores que puedan publicar sus propios productos y usuarios clientes que puedan comprarlos.

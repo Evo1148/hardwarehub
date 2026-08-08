@@ -12,7 +12,10 @@
             <p class="mb-1"><strong>Comprador:</strong> <span th:text="${pedido.comprador.nombre}"></span></p>
             <p class="mb-1"><strong>Email comprador:</strong> <span th:text="${pedido.comprador.email}"></span></p>
             <p class="mb-1"><strong>Fecha:</strong> <span th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}"></span></p>
-            <p class="mb-0"><strong>Total:</strong> <span th:text="${pedido.total}"></span> €</p>
+            <p class="mb-0">
+                <strong th:text="${vistaVendedor} ? 'Total de tus líneas:' : 'Total:'"></strong>
+                <span th:text="${totalVisible}"></span> €
+            </p>
         </div>
     </div>
 
@@ -27,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="l : ${pedido.lineas}">
+        <tr th:each="l : ${lineasVisibles}">
             <td th:text="${l.nombreProducto}"></td>
             <td th:text="${l.vendedor.nombre}"></td>
             <td><span th:text="${l.precioUnitario}"></span> €</td>
@@ -37,7 +40,9 @@
         </tbody>
     </table>
 
-    <a class="btn btn-secondary" th:href="@{/pedidos}">Volver a mis compras</a>
+    <a class="btn btn-secondary"
+       th:href="${vistaVendedor} ? @{/vendedor/ventas} : @{/pedidos}"
+       th:text="${vistaVendedor} ? 'Volver a mis ventas' : 'Volver a mis compras'"></a>
 
 </div>
 
